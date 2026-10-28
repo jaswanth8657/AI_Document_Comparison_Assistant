@@ -112,7 +112,7 @@ echo Local URL: http://localhost:8501
 echo Press Ctrl+C in this console window to stop the application.
 echo.
 
-"%VENV_PY%" -m streamlit run "%APP_FILE%"
+"%VENV_PY%" -m streamlit run "%APP_FILE%" --browser.gatherUsageStats false
 
 if %errorlevel% neq 0 (
     echo.
