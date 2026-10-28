@@ -11,16 +11,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Gemini Model Configuration
-# Standard default model for Google GenAI SDK
-DEFAULT_GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+# Dedicated supported model for Google GenAI SDK
+DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
 GEMINI_API_KEY_ENV = os.getenv("GEMINI_API_KEY", "")
 
-# Supported Models List for Streamlit Selector
+# Supported Models List (Only gemini-2.5-flash is supported)
 AVAILABLE_MODELS = [
     "gemini-2.5-flash",
-    "gemini-1.5-flash",
-    "gemini-1.5-pro",
-    "gemini-2.0-flash",
 ]
 
 # Processing Limits
@@ -50,3 +47,4 @@ def get_gemini_api_key(user_provided_key: Optional[str] = None) -> str:
     if user_provided_key and user_provided_key.strip():
         return user_provided_key.strip()
     return GEMINI_API_KEY_ENV.strip()
+

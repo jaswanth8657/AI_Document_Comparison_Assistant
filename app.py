@@ -161,12 +161,21 @@ def load_sample_documents():
 with st.sidebar:
     st.markdown("### ⚙️ Engine Settings")
     
-    # Model Selection
-    selected_model = st.selectbox(
-        "Gemini AI Model",
-        options=AVAILABLE_MODELS,
-        index=AVAILABLE_MODELS.index(DEFAULT_GEMINI_MODEL) if DEFAULT_GEMINI_MODEL in AVAILABLE_MODELS else 0,
-        help="Select the Gemini model for analysis. Default is gemini-2.5-flash.",
+    # Configured Gemini AI Model (Fixed to backend-supported gemini-2.5-flash)
+    selected_model = DEFAULT_GEMINI_MODEL
+    st.markdown(
+        f"""
+        <div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 12px 14px; margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Gemini AI Model</div>
+            <div style="font-size: 14px; font-weight: 600; color: #0F172A; display: flex; align-items: center; gap: 6px;">
+                <span>🤖</span> <code>{selected_model}</code>
+            </div>
+            <div style="font-size: 11px; color: #16A34A; margin-top: 4px; font-weight: 500;">
+                ● Configured &amp; Active
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
     # API Key Configuration
@@ -531,3 +540,4 @@ if res:
 
         st.markdown("---")
         st.caption(f"**Legal & Compliance Notice:** {APP_DISCLAIMER}")
+

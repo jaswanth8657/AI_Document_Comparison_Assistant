@@ -113,6 +113,10 @@ class DocumentComparator:
             client_override: Optional mock client for automated testing.
         """
         self.api_key = api_key or ""
+        # Enforce configured supported model
+        if model_name != DEFAULT_GEMINI_MODEL:
+            logger.info("Enforcing configured model '%s' (requested: '%s')", DEFAULT_GEMINI_MODEL, model_name)
+            model_name = DEFAULT_GEMINI_MODEL
         self.model_name = model_name
         self.temperature = temperature
         self.top_p = top_p
