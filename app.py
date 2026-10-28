@@ -128,6 +128,8 @@ if "is_processing" not in st.session_state:
     st.session_state.is_processing = False
 if "sample_loaded" not in st.session_state:
     st.session_state.sample_loaded = False
+if "submitted_api_key" not in st.session_state:
+    st.session_state.submitted_api_key = ""
 
 
 def reset_application_state():
@@ -182,18 +184,37 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("### 🔑 API Authentication")
     env_key = get_gemini_api_key()
-    user_api_key = st.text_input(
-        "Gemini API Key",
-        value=env_key,
-        type="password",
-        placeholder="Enter AI Studio API Key...",
-        help="Your key is kept locally in session and never logged or exposed.",
-    )
-    
-    if not user_api_key:
-        st.warning("⚠️ Enter a Gemini API Key or set `GEMINI_API_KEY` in `.env` to execute comparisons.")
-    else:
-        st.success("✅ API Key configured")
+
+    # Form for explicit API Key submission
+    with st.form("api_key_form", clear_on_submit=False):
+        api_key_input = st.text_input(
+            "Gemini API Key",
+            value=st.session_state.submitted_api_key if st.session_state.submitted_api_key else env_key,
+            type="password",
+            placeholder="Enter AI Studio API Key...",
+            help="Your key is kept locally in session and never logged or exposed.",
+        )
+        submit_key_btn = st.form_submit_button("Submit API Key", use_container_width=True)
+
+    if submit_key_btn:
+        clean_key = api_key_input.strip()
+        if clean_key:
+            st.session_state.submitted_api_key = clean_key
+            st.success("✅ API key configured successfully")
+        else:
+            st.session_state.submitted_api_key = ""
+            st.error("❌ API key cannot be empty. Please enter a valid key.")
+
+    # Determine effective active API key (UI submission takes precedence over .env)
+    active_api_key = st.session_state.submitted_api_key if st.session_state.submitted_api_key else env_key
+    user_api_key = active_api_key
+
+    # Display persistent status indicator when submit was not just triggered
+    if not submit_key_btn:
+        if user_api_key:
+            st.success("✅ API Key configured")
+        else:
+            st.warning("⚠️ Enter a Gemini API Key and click 'Submit API Key', or set `GEMINI_API_KEY` in `.env`.")
 
     # Sample Document Quick-Load Button
     st.markdown("---")
@@ -339,7 +360,7 @@ if compare_btn and can_compare:
     if not is_valid_pair:
         st.error(f"❌ **Pair Validation Error:** {pair_error}")
     elif not user_api_key:
-        st.error("❌ **Missing API Key:** Please enter your Gemini API key in the sidebar to run the comparison.")
+        st.error("❌ **Missing API Key:** Please enter your Gemini API key in the sidebar and click 'Submit API Key' to run the comparison.")
     else:
         st.session_state.is_processing = True
         with st.spinner("Analyzing documents with Gemini AI... Evaluating similarities, differences, and key details..."):
