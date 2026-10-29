@@ -17,3 +17,4 @@ pydantic>=2.0.0
 
 # Automated Testing
 pytest>=8.0.0
+

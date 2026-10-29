@@ -84,3 +84,4 @@ class DocumentInfo(BaseModel):
     full_text: str = ""
     error_message: Optional[str] = None
     has_images_or_scanned_notice: bool = False
+

@@ -170,3 +170,4 @@ def test_validate_document_pair():
     is_valid_lim, err_lim = validate_document_pair(info_a, info_b, max_total_chars=10)
     assert is_valid_lim is False
     assert "exceeds the supported comparison ceiling" in err_lim
+

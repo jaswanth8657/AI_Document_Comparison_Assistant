@@ -156,3 +156,4 @@ def test_docx_save_to_file(tmp_path, sample_comparison_result):
 
     assert os.path.exists(dest_path)
     assert os.path.getsize(dest_path) > 5000
+

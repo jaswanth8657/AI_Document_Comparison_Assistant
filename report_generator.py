@@ -434,3 +434,4 @@ def generate_docx_report(
             f.write(buffer.getvalue())
 
     return buffer
+
