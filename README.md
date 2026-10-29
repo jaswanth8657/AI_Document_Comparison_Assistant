@@ -15,6 +15,7 @@ Unlike naive LLM wrappers that merely pass unconstrained prompts to a conversati
 - **Strict Document Extraction & Integrity Boundaries:** Powered by `pypdf`, tracking page-by-page text, character metrics, and page citations.
 - **Untrusted Content Isolation:** Treats document text as passive data to defend against prompt injection.
 - **Evidence-Grounded AI Engine:** Uses Google's official `google-genai` SDK with strict JSON schema enforcement via Pydantic to eliminate hallucinated differences.
+- **Dedicated Model Runtime:** Backend is locked to `gemini-2.5-flash` for high performance and strict schema adherence.
 - **Executive Streamlit UI/UX:** Features responsive dual-card uploaders, text inspection drawers, 6 categorized analysis tabs, difference filtering badges, and one-click sample document loading.
 - **Publication-Quality Report Generation:** Produces clean `.docx` reports with customized color palettes, metadata headers, comparison tables, and compliance disclaimers.
 
@@ -111,7 +112,7 @@ ai-document-comparison-assistant/
 | :--- | :--- | :--- |
 | **Python** | 3.10+ (tested on 3.14) | Core programming language offering rich typing, dataclass, and AI ecosystem support. |
 | **Streamlit** | 1.35.0+ | Modern reactive web framework delivering instant user interactions without heavy frontend overhead. |
-| **Google GenAI** | `google-genai>=2.0.0` | Google's current, official SDK for Gemini 2.5 Flash / 1.5 Flash with native structured output. |
+| **Google GenAI** | `google-genai>=2.0.0` | Google's current, official SDK for Gemini 2.5 Flash with native structured output. |
 | **pypdf** | 4.0.0+ | Pure-Python PDF parser providing fast, dependency-free text extraction and page trees. |
 | **python-docx** | 1.1.0+ | Generates enterprise Microsoft Word documents with full control over XML cell shading and margins. |
 | **Pydantic** | 2.0.0+ | Strict runtime data validation guaranteeing the LLM response adheres to the JSON contract. |
@@ -173,7 +174,7 @@ Double-click `run_windows.bat` in the project root folder. The script will autom
 1. Visit [Google AI Studio](https://aistudio.google.com/) and generate a free Gemini API key.
 2. You can provide the API key in two secure ways:
    - **Environment Variable (Recommended):** Set `GEMINI_API_KEY` inside `.env`. The file is ignored by `.gitignore` and will never be committed to source control.
-   - **Application Sidebar:** Input the key directly into the password-masked field in the Streamlit sidebar during your active session.
+   - **Application Sidebar:** Input the key directly into the password-masked field in the Streamlit sidebar during your active session and click **Submit API Key**.
 3. **Security Assurance:**
    - Keys are kept strictly on the local machine and sent only via HTTPS to Google's API endpoint.
    - API keys are never rendered in logs, UI screens, tracebacks, or exported DOCX reports.
@@ -293,29 +294,16 @@ tests/test_report_generator.py
 
 ---
 
-## 12. Git & GitHub Submission Instructions
+## 12. GitHub Repository & Submission
 
-To push this repository to GitHub for your internship submission:
+- **Repository:** [https://github.com/jaswanth8657/AI_Document_Comparison_Assistant](https://github.com/jaswanth8657/AI_Document_Comparison_Assistant)
+- **Branch:** `main`
 
+To clone and run:
 ```powershell
-# 1. Initialize git repository (if not already initialized)
-git init
-
-# 2. Verify git status (confirm .env and venv are ignored)
-git status
-
-# 3. Add all project files
-git add .
-
-# 4. Commit with conventional commit message
-git commit -m "feat: complete AI Document Comparison Assistant project for internship submission"
-
-# 5. Set main branch and connect remote repository
-git branch -M main
-git remote add origin https://github.com/your-username/ai-document-comparison-assistant.git
-
-# 6. Push to GitHub
-git push -u origin main
+git clone https://github.com/jaswanth8657/AI_Document_Comparison_Assistant.git
+cd AI_Document_Comparison_Assistant
+run_windows.bat
 ```
 
 ---
@@ -327,4 +315,3 @@ git push -u origin main
 - **Project Title:** AI Document Comparison Assistant
 - **Delivery Date:** Submission-Ready
 - **License:** Educational / Internship Project
-
